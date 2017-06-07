@@ -7,12 +7,20 @@ def enum_files(dir):
     files = [name for name in os.listdir(dir) if os.path.isfile(os.path.join(dir, name))]
     return files
 
-def meger_fies(dir, files):
+def meger_files(dir):
     data = None
+    files = enum_files(dir)
     for file in files:
         xlsx = pd.ExcelFile(os.path.join(dir, file))
         df = pd.read_excel(xlsx, 'Sheet1')
         data = pd.concat([data, df])
+        date = get_date_from_file_name(file)
+        data['年'] = date[0]
+        data['月'] = date[1]
+    data = data.reset_index(drop = True)
+    writer = pd.ExcelWriter(os.path.join(dir, 'output.xlsx'))
+    data.to_excel(writer,'Sheet1')
+    writer.save()
 
 def get_date_from_file_name(file):
-    re.split(r'[_.]', files[0])
+    return re.split(r'[_.]', files[0])[:2]
