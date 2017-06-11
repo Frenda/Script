@@ -7,6 +7,9 @@ def enum_files(dir):
     files = [name for name in os.listdir(dir) if os.path.isfile(os.path.join(dir, name))]
     return files
 
+def get_date_from_file_name(file):
+    return re.split(r'[_.]', file)[:2]
+
 def meger_files(dir):
     data = None
     files = enum_files(dir)
@@ -22,5 +25,3 @@ def meger_files(dir):
     data.to_excel(writer,'Sheet1')
     writer.save()
 
-def get_date_from_file_name(file):
-    return re.split(r'[_.]', files[0])[:2]
