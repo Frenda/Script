@@ -10,6 +10,9 @@ def enum_files(dir):
 def get_date_from_file_name(file):
     return re.split(r'[_.]', file)[:2]
 
+def str_to_int():
+    
+
 def meger_files(dir):
     data = None
     files = enum_files(dir)
