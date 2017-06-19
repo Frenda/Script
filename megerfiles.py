@@ -29,10 +29,10 @@ def meger_files(dir):
     for file in files:
         xlsx = pd.ExcelFile(os.path.join(dir, file))
         df = pd.read_excel(xlsx, 'Sheet1')
-        data = pd.concat([data, df])
         date = get_date_from_file_name(file)
-        data['年'] = date[0]
-        data['月'] = date[1]
+        df['年'] = date[0]
+        df['月'] = date[1]
+        data = pd.concat([data, df])
     data = data.reset_index(drop = True)
     data.点击 = str_to_int(data)
     writer = pd.ExcelWriter(os.path.join(dir, 'output.xlsx'))
