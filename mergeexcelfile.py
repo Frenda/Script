@@ -1,6 +1,5 @@
 import os
 import xlwings as xw
-import pandas as pd
 
 def enum_files(path):
     excel_files = []
@@ -12,10 +11,15 @@ def enum_files(path):
 def merge_excel_file(path):
     merge_data = []
     excel_files = enum_files(path)
+    is_first_open = False
     app = xw.App(visible = False)
     for excel_file in excel_files:
         wb = app.books.open(excel_file)
-        rng = wb.sheets[0].range('a1').options(expand = 'table').value
+        if is_first_open == False:
+            rng = wb.sheets[0].range('a1').options(expand = 'table').value
+            is_first_open = True
+        else:
+            rng = wb.sheets[0].range('a2').options(expand = 'table').value
         merge_data.extend(rng)
         wb.close()
     wb_merge_excle = xw.App(visible = False).books.add()
