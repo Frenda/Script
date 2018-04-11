@@ -33,7 +33,7 @@ def merge_excel_file(path):
             rng = wb.sheets[0].range('a2').options(expand = 'table').value
             write_data_location = ''.join(['a', str(data_len)])
             wb_merge_excle.sheets[0].range(write_data_location).value = merge_data
-        merge_data.extend(rng)
+            data_len = data_len + len(rng) + 1
         wb.close()
     merge_excel_file_path = os.path.join(path, 'merge.xlsx')
     wb_merge_excle.save(merge_excel_file_path)
