@@ -10,19 +10,27 @@ def enum_files(path):
 
 def merge_excel_file(path):
     merge_data = []
+    ##枚举指定目录下的excel文件
     excel_files = enum_files(path)
     is_first_open = False
+    ##打开一个以不可见的App
     app = xw.App(visible = False)
     for excel_file in excel_files:
+        ##打开excel文件
         wb = app.books.open(excel_file)
         if is_first_open == False:
+            ##第一次读取数据
             rng = wb.sheets[0].range('a1').options(expand = 'table').value
             is_first_open = True
         else:
+            ##忽略第一行数据
             rng = wb.sheets[0].range('a2').options(expand = 'table').value
+        ##把数据保存起来
         merge_data.extend(rng)
         wb.close()
+    ##创建用来保存合并数据的工作簿
     wb_merge_excle = xw.App(visible = False).books.add()
+    ##写入数据
     wb_merge_excle.sheets[0].range('a1').value = merge_data
     merge_excel_file_path = os.path.join(path, 'merge.xlsx')
     wb_merge_excle.save(merge_excel_file_path)
