@@ -38,3 +38,4 @@ def merge_excel_file(path):
     merge_excel_file_path = os.path.join(path, 'merge.xlsx')
     wb_merge_excle.save(merge_excel_file_path)
     wb_merge_excle.close()
+    app.kill()
