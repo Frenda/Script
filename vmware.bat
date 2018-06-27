@@ -121,6 +121,16 @@
 
  net stop "VMUSBArbService" 
 
+ sc config "VMwareHostd" start= demand
+
+ sc config "VMAuthdService" start= demand
+
+ sc config "VMnetDHCP" start= demand
+
+ sc config "VMware NAT Service" start= demand
+
+ sc config "VMUSBArbService" start= demand
+
  echo 正在禁用网络连接... 
 
  netsh interface set interface "VMware Network Adapter VMnet1" disable 
